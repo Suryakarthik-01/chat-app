@@ -20,8 +20,7 @@ export const io = new Server(server,{
 })
 
 // Store online users
-export const usersocketMap = {}; // {userId : socketId}
-
+export const usersocketMap = {}; 
 //socket.io connection handler
 io.on("connection", (socket)=>{
     const userId = socket.handshake.query.userId;
@@ -33,7 +32,7 @@ io.on("connection", (socket)=>{
     socket.on("disconnect", ()=>{
         console.log("user disconnected", userId);
         delete usersocketMap[userId]
-        io.emit("getOnlineUsers", Object.j=keys(user))
+        io.emit("getOnlineUsers", Object.keys(usersocketMap));
     })
 })
 
