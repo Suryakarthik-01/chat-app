@@ -1,9 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { AuthContext } from "./AuthContext";
+import AuthContext from "./AuthContext";
 import toast from "react-hot-toast";
 
 
-export const ChatContext = createContext();
+const ChatContext = createContext();
 
 export const ChatProvider = ({ children }) => {
 
@@ -44,7 +44,7 @@ export const ChatProvider = ({ children }) => {
         try {
             const { data } = await axios.post(`/api/messages/${selectedUser._id}`, messageData);
             if (data.success) {
-                setMessages(() => [...prevMessages, data.newMessage])
+                setMessages((prevMessages) => [...prevMessages, data.newMessage])
             } else {
                 toast.error(data.message);
             }
@@ -62,10 +62,10 @@ export const ChatProvider = ({ children }) => {
         socket.on("newMessage", (newMessage) => {
             if (selectedUser && newMessage.senderId === selectedUser._id) {
                 newMessage.seen = true;
-                setMessages(() => [...prevMessages, newMessage]);
+                setMessages((prevMessages) => [...prevMessages, newMessage]);
                 axios.put(`/api/messages/mark/${newMessage._id}`);
             } else {
-                setUnseenMessages(() => ({
+                setUnseenMessages((prevUnseenMessages) => ({
                     ...prevUnseenMessages, [newMessage.senderId]: prevUnseenMessages[newMessage.senderId] ? prevUnseenMessages[newMessage.senderId] + 1 : 1
                 }))
             }
@@ -96,3 +96,5 @@ export const ChatProvider = ({ children }) => {
         </ChatContext.Provider>
     )
 }
+
+export default ChatContext;

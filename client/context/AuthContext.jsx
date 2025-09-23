@@ -3,14 +3,10 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { io } from "socket.io-client";
 
-
-
-
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 axios.defaults.baseURL = backendUrl;
 
-
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
 export const AuthProvider = ({children})=>{
 
@@ -18,7 +14,6 @@ export const AuthProvider = ({children})=>{
     const [authUser, setAuthUser ] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([]);
     const [socket, setSocket] = useState(null);
-    const [loading, setLoading] = useState(true);
 
 // check if user is authenticated and if so, set teh user data and connect the socket 
 
@@ -31,9 +26,7 @@ export const AuthProvider = ({children})=>{
             }
         } catch (err) {
             toast.error(err.message);
-        } finally {
-            setLoading(false);
-        }
+        } 
     };
 
 // login function to handle user authentication and socket connection
@@ -115,3 +108,5 @@ const login = async (state, credentials)=>{
         </AuthContext.Provider>
     )
 }
+
+export default AuthContext;

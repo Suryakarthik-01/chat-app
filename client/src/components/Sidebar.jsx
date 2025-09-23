@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import assets from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
-import { AuthContext } from '../../context/AuthContext'
-import { ChatContext } from '../../context/ChatContext'
+import AuthContext from '../../context/AuthContext';
+import  ChatContext  from '../../context/ChatContext'
 
 const Sidebar = () => {
 
@@ -12,11 +12,13 @@ const Sidebar = () => {
 
     const [input, setInput] = useState(false)
 
-    const filteredUsers = input ? users.filter((user)=>user.fullName.toLowwerCase().includes(input.toLowwerCase())) : users;
+    const filteredUsers = input ? users.filter((user)=>user.fullName.toLowerCase().includes(input.toLowerCase())) : users;
 
-    useEffect(()=>{
+    useEffect(() => {
         getUsers();
-    },[onlineUsers])
+    }, []);
+
+
 
     const navigate = useNavigate();
     return (
@@ -57,7 +59,7 @@ const Sidebar = () => {
                             {
                                 onlineUsers.includes(user._id)
                                     ? <span className='text-green-400 text-xs'>Online</span>
-                                    : <span className='text-neutral-400 text-xs'>Online</span>
+                                    : <span className='text-neutral-400 text-xs'>Offline</span>
                             }
 
                         </div>
