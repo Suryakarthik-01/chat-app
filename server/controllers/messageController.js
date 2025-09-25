@@ -1,23 +1,20 @@
-import message from "../models/Message.js";
+import Message from "../models/Message.js";
+import User from "../models/User.js";
 import cloudinary from "../lib/cloudinary.js";
 import { io, usersocketMap } from "../server.js";
 
-
-
-
-
-// get all users except the  logged in user
+// get all users except the logged in user
 export const getUsersForSidebar = async (req, res) => {
   try {
     const userId = req.user._id;
-    const filteredUsers = await UserActivation.find({
+    const filteredUsers = await User.find({
       _id: { $ne: userId },
     }).select("-password");
 
     // count number of messages not seen
     const unseenMessages = {};
     const promises = filteredUsers.map(async (user) => {
-      const messages = await MessageChannel.find({
+      const messages = await Message.find({
         senderId: user._id,
         receiverId: userId,
         seen: false,
@@ -40,13 +37,13 @@ export const getMessages = async (req, res) => {
     const { id: selectedUserId } = req.params;
     const myId = req.user._id;
 
-    const messages = await MessageChannel.find({
+    const messages = await Message.find({
       $or: [
         { senderId: myId, receiverId: selectedUserId },
         { senderId: selectedUserId, receiverId: myId },
       ],
     });
-    await MessageChannel.updatemany(
+    await Message.updateMany(
       { senderId: selectedUserId, receiverId: myId },
       { seen: true }
     );
@@ -58,11 +55,10 @@ export const getMessages = async (req, res) => {
 };
 
 // api to mark message as seen using message id
-
 export const markMessageAsSeen = async (req, res) => {
   try {
-    const { id } = req.parms;
-    await message.findByIdAndUpdate(id, { seen: true });
+    const { id } = req.params;
+    await Message.findByIdAndUpdate(id, { seen: true });
     res.json({ success: true });
   } catch (error) {
     console.log(error.message);
@@ -73,26 +69,26 @@ export const markMessageAsSeen = async (req, res) => {
 // send message to selected user
 export const sendMessage = async (req, res) => {
   try {
-    const { text, image } = req.bdoy;
+    const { text, image } = req.body;
     const receiverId = req.params.id;
-    const senderId = req.params.id;
+    const senderId = req.user._id;
 
     let imageUrl;
     if (image) {
       const uploadResponse = await cloudinary.uploader.upload(image);
       imageUrl = uploadResponse.secure_url;
     }
-    const newMessage = await MessageChannel.create({
+    const newMessage = await Message.create({
       senderId,
       receiverId,
       text,
       image: imageUrl,
     });
 
-    // emit the  new mesage to the receiver's id
+    // emit the new message to the receiver's id
     const receiverSocketId = usersocketMap[receiverId];
     if (receiverSocketId) {
-        io.to(receiverSocketId).emit("newMessage", newMessage)
+      io.to(receiverSocketId).emit("newMessage", newMessage);
     }
     res.json({ success: true, newMessage });
   } catch (error) {
