@@ -17,7 +17,7 @@ const App = () => {
   );
 
   return (
-    <div className="bg-[url('/bgImage.svg')] bg-contain min-h-screen">
+    <div className="min-h-screen bg-contain" style={{ backgroundImage: "url('/bgImage.svg')" }}>
       <Toaster />
       <Routes>
         <Route path='/' element={authUser ? <HomePage /> : <Navigate to="/login" />} />
