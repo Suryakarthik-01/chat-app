@@ -61,8 +61,6 @@ cd ../server
 npm install
 ```
 
----
-
 ### 3. Setup Environment Variables
 In the /server directory, create a .env file and add:
 ```bash
@@ -85,8 +83,8 @@ npm run dev
 
 ---
 
-## 🌍 Deployment
-🔗 Live Demo: Check it out here
+## 🌍 Deployment  
+🔗 **Live Demo**: [WeChat](https://chat-app-ten-chi-20.vercel.app)
 
 To deploy your own instance:
 Push your code to GitHub.
