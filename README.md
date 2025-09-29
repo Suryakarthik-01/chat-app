@@ -47,3 +47,71 @@ This project demonstrates how to integrate **real-time communication** into full
 ```bash
 git clone https://github.com/yourusername/wechat.git
 cd wechat
+
+```
+### 2. Install dependencies:
+Frontend:
+```bash
+cd client
+npm install
+```
+Backend
+```bash
+cd ../server
+npm install
+```
+
+---
+
+### 3. Setup Environment Variables
+In the /server directory, create a .env file and add:
+```bash
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+PORT=5000
+```
+### 4. Start the development servers:
+Backend:
+```bash
+cd server
+npm run dev
+```
+Frontend:
+```bash
+cd client
+npm run dev
+```
+✅ Open http://localhost:5173 in your browser.
+
+---
+
+## 🌍 Deployment
+🔗 Live Demo: Check it out here
+
+To deploy your own instance:
+Push your code to GitHub.
+1. Connect the frontend (/client) to Vercel.
+2. Connect the backend (/server) to Render or Railway.
+3. Set the required environment variables in both platforms.
+4. Update the frontend’s API base URL to point to your deployed backend.
+
+---
+
+## ⚙️ Technologies Used
+
+- **Frontend**: React, Tailwind CSS, React Router.
+- **Backend**: Node.js, Express.js.
+- **Database**: MongoDB (Mongoose).
+- **Authentication**: JWT.
+- **Real-Time Engine**: Socket.io.
+- **Deployment**: Vercel (frontend), Render (backend).
+
+---
+
+
+## 👥 Contributor
+
+- **[Karthik Kumar Surya](https://github.com/Suryakarthik-01)**
+
+
+
