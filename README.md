@@ -27,8 +27,7 @@ This project demonstrates how to integrate **real-time communication** into full
 - **Authentication**: Secure JWT-based authentication flow.  
 - **Messaging**: Real-time socket connection for instant message delivery.  
 - **Database**: MongoDB with Mongoose for user and message management.  
-- **Deployment**: Deployed on Vercel / Render for accessibility.  
-
+- **Deployment**: Deployed on Vercel / Render for accessibility. 
 ---
 
 ## 🚀 Installation  
@@ -38,3 +37,32 @@ Clone the repository:
 git clone https://github.com/yourusername/wechat.git
 cd wechat
 
+# Frontend
+cd client
+npm install
+
+Install dependencies for both frontend and backend:
+
+# Backend
+cd ../server
+npm install
+
+Setup Environment Variables
+
+In /server, create a .env file and add:
+
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+PORT=5000
+Start the development servers:
+# Backend
+cd server
+npm run dev
+
+# Frontend
+cd client
+npm run dev
+
+
+Open http://localhost:5173/
+ in your browser.
